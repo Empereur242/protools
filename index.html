@@ -1,0 +1,1824 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProTools - Plateforme Professionnelle Multi-Services</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#764ba2">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #333;
+        }
+
+        main {
+            margin-top: 100px;
+            padding: 2rem 0;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .service-card h3 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .service-card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-button {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            position: relative;
+        }
+
+        .service-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .service-button:hover::after {
+            content: attr(title);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            z-index: 10;
+            margin-bottom: 10px;
+        }
+
+        .ad-banner {
+            background: linear-gradient(45deg, #ffecd2, #fcb69f);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 2px dashed #ff9a9e;
+        }
+
+        .ad-banner h4 {
+            color: #d63031;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .ad-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .ad-slot {
+            background: white;
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .ad-slot a {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .ad-slot:hover {
+            transform: scale(1.05);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: #667eea;
+        }
+
+        .tool-interface {
+            margin-top: 2rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .input-group input,
+        .input-group textarea,
+        .input-group select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-group input:focus,
+        .input-group textarea:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .error {
+            color: red;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .results {
+            background: #f8f9ff;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            border-left: 4px solid #667eea;
+        }
+
+        .sidebar-ad {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 160px;
+            background: white;
+            border-radius: 15px;
+            padding: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+        }
+
+        .sidebar-ad a {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .floating-ad {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: linear-gradient(45deg, #a8edea, #fed6e3);
+            padding: 1rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            max-width: 300px;
+            cursor: move;
+        }
+
+        .floating-ad a {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        canvas {
+            max-width: 100%;
+            margin-top: 1rem;
+        }
+
+        .follow-us {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 4rem;
+            border-radius: 15px;
+        }
+
+        .follow-us h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .social-links a {
+            font-size: 2rem;
+            color: #667eea;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #764ba2;
+            transform: scale(1.2);
+        }
+
+        .follow-us p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background: rgba(255, 255, 255, 0.95);
+                padding: 1rem;
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            .sidebar-ad,
+            .floating-ad {
+                display: none;
+            }
+            .modal-content {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="input-group">
+    <label><input type="checkbox" id="contactConsent" required> J'accepte que mes données soient collectées pour traiter ma demande.</label>
+    <div id="contactConsentError" class="error"></div>
+</div>
+    <!-- En-tête -->
+    <header>
+        <nav class="container">
+            <div class="logo">ProTools</div>
+            <button class="hamburger" onclick="basculerMenu()" aria-label="Ouvrir le menu">☰</button>
+            <ul class="nav-links">
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#tarifs">Tarifs</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Contenu principal -->
+    <main>
+        <div class="container">
+            <!-- Section héros -->
+            <section id="accueil" class="hero">
+                <h1>ProTools</h1>
+                <p>Votre plateforme tout-en-un pour optimiser vos performances SEO, IA, gestion financière et santé.</p>
+                <a href="#services" class="cta-button">Découvrir nos outils</a>
+            </section>
+
+            <!-- Bannière publicitaire -->
+            <div class="ad-banner">
+                <h4>🎯 Publicités Sponsorisées</h4>
+                <div class="ad-grid">
+                    <div class="ad-slot">
+                        <a href="https://ads.google.com" target="_blank">
+                            <strong>Google Ads</strong><br>
+                            <small>Emplacement publicitaire disponible</small>
+                        </a>
+                    </div>
+                    <div class="ad-slot">
+                        <a href="https://www.amazon.com" target="_blank">
+                            <strong>Amazon</strong><br>
+                            <small>Produits recommandés</small>
+                        </a>
+                    </div>
+                    <div class="ad-slot">
+                        <a href="https://www.aliexpress.com" target="_blank">
+                            <strong>AliExpress</strong><br>
+                            <small>Offres spéciales</small>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grille des services -->
+            <section id="services" class="services-grid">
+                <div class="service-card">
+                    <span class="service-icon">🔍</span>
+                    <h3>Outils SEO</h3>
+                    <p>Analysez vos mots-clés, optimisez votre contenu et surveillez votre positionnement.</p>
+                    <button class="service-button" onclick="ouvrirModale('seoModal')" title="Optimisez votre site pour les moteurs de recherche">Utiliser les outils SEO</button>
+                </div>
+                <div class="service-card">
+                    <span class="service-icon">🤖</span>
+                    <h3>Assistant IA</h3>
+                    <p>Générateur de contenu, analyse de données et assistance intelligente pour vos projets.</p>
+                    <button class="service-button" onclick="ouvrirModale('aiModal')" title="Créez du contenu avec l'IA">Accéder à l'IA</button>
+                </div>
+                <div class="service-card">
+                    <span class="service-icon">💰</span>
+                    <h3>Gestion Financière</h3>
+                    <p>Calculateurs financiers, suivi des investissements et analyses de marché.</p>
+                    <button class="service-button" onclick="ouvrirModale('financeModal')" title="Gérez vos finances">Outils financiers</button>
+                </div>
+                <div class="service-card">
+                    <span class="service-icon">🏥</span>
+                    <h3>Santé & Bien-être</h3>
+                    <p>Calculateurs de santé, suivi fitness et conseils personnalisés.</p>
+                    <button class="service-button" onclick="ouvrirModale('healthModal')" title="Suivez votre santé">Outils santé</button>
+                </div>
+                <div class="service-card">
+                    <span class="service-icon">📱</span>
+                    <h3>Gestionnaire Réseaux Sociaux</h3>
+                    <p>Planifiez vos publications, analysez vos performances et gérez tous vos réseaux sociaux.</p>
+                    <button class="service-button" onclick="ouvrirModale('socialModal')" title="Boostez vos réseaux sociaux">Gérer les réseaux</button>
+                </div>
+                <div class="service-card">
+                    <span class="service-icon">📧</span>
+                    <h3>Marketing par E-mail</h3>
+                    <p>Créez des campagnes e-mail efficaces, templates personnalisés et suivi des conversions.</p>
+                    <button class="service-button" onclick="ouvrirModale('emailModal')" title="Lancez une campagne e-mail">Créer une campagne</button>
+                </div>
+                <div class="service-card">
+                    <span class="service-icon">📊</span>
+                    <h3>Analytics Pro</h3>
+                    <p>Tableaux de bord personnalisés, métriques avancées et rapports automatisés.</p>
+                    <button class="service-button" onclick="ouvrirModale('analyticsModal')" title="Analysez vos données">Voir les stats</button>
+                </div>
+                <div class="service-card">
+                    <span class="service-icon">🔲</span>
+                    <h3>Générateur QR Code</h3>
+                    <p>Créez des QR codes personnalisés pour vos liens, WiFi, contacts et plus encore.</p>
+                    <button class="service-button" onclick="ouvrirModale('qrModal')" title="Créez un QR code">Générer QR Code</button>
+                </div>
+                <div class="service-card">
+                    <span class="service-icon">🔐</span>
+                    <h3>Gestionnaire Mots de Passe</h3>
+                    <p>Générez des mots de passe sécurisés et vérifiez la force de vos mots de passe existants.</p>
+                    <button class="service-button" onclick="ouvrirModale('passwordModal')" title="Sécurisez vos comptes">Sécuriser mes comptes</button>
+                </div>
+                <div class="service-card">
+                    <span class="service-icon">💱</span>
+                    <h3>Convertisseur Devises</h3>
+                    <p>Taux de change en temps réel, historique des devises et calculateur multi-devises.</p>
+                    <button class="service-button" onclick="ouvrirModale('currencyModal')" title="Convertissez des devises">Convertir devises</button>
+                </div>
+                <div class="service-card">
+                    <span class="service-icon">🌍</span>
+                    <h3>Gestionnaire Fuseaux</h3>
+                    <p>Planifiez vos réunions internationales et gérez plusieurs fuseaux horaires facilement.</p>
+                    <button class="service-button" onclick="ouvrirModale('timezoneModal')" title="Gérez les fuseaux horaires">Gérer les heures</button>
+                </div>
+                <div class="service-card">
+                    <span class="service-icon">🔗</span>
+                    <h3>Raccourcisseur URL</h3>
+                    <p>Créez des liens courts, trackez les clics et analysez le trafic de vos liens.</p>
+                    <button class="service-button" onclick="ouvrirModale('urlModal')" title="Raccourcissez vos liens">Raccourcir liens</button>
+                </div>
+            </section>
+
+            <!-- Section tarifs -->
+            <section id="tarifs" class="container">
+                <h2>Tarifs</h2>
+                <p>Découvrez nos offres adaptées à vos besoins.</p>
+                <!-- Ajouter des plans tarifaires ici -->
+            </section>
+
+            <!-- Section contact -->
+            <section id="contact" class="container">
+                <h2>Contactez-nous</h2>
+                <p>Envoyez-nous un message pour toute question.</p>
+                <button class="cta-button" onclick="envoyerMessage()">Envoyer un message</button>
+            </section>
+
+            <!-- Section Suivez-nous -->
+            <section class="follow-us container">
+                <h3>Suivez-nous sur :</h3>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/protoolsfr" target="_blank" aria-label="Suivez-nous sur Instagram">📸</a>
+                    <a href="https://www.facebook.com/protoolsfr" target="_blank" aria-label="Suivez-nous sur Facebook">📘</a>
+                    <a href="https://x.com/protoolsfr" target="_blank" aria-label="Suivez-nous sur X">𝕏</a>
+                </div>
+                <p>France, 2025</p>
+            </section>
+        </div>
+    </main>
+
+    <!-- Publicité latérale -->
+    <div class="sidebar-ad">
+        <a href="https://example.com/app" target="_blank">
+            <h5>📱 App Mobile</h5>
+            <p>Téléchargez notre app pour accéder à tous vos outils en déplacement !</p>
+            <small>Disponible sur iOS & Android</small>
+        </a>
+    </div>
+
+    <!-- Publicité flottante -->
+    <div class="floating-ad">
+        <a href="https://example.com/offer" target="_blank">
+            <strong>🎁 Offre Limitée !</strong><br>
+            <small>30% de réduction sur tous nos plans premium jusqu'à la fin du mois !</small>
+        </a>
+    </div>
+
+    <!-- Modale SEO -->
+    <div id="seoModal" class="modal" role="dialog" aria-labelledby="seoModalTitle" aria-modal="true">
+        <div class="modal-content">
+            <span class="close" onclick="fermerModale('seoModal')" role="button" aria-label="Fermer la modale SEO">×</span>
+            <h2 id="seoModalTitle">🔍 Outils SEO Professionnels</h2>
+            <div class="tool-interface">
+                <div class="input-group">
+                    <label for="seoUrl">URL à analyser :</label>
+                    <input type="url" id="seoUrl" placeholder="https://exemple.com">
+                    <div id="seoUrlError" class="error"></div>
+                </div>
+                <div class="input-group">
+                    <label for="seoMotCle">Mot-clé principal :</label>
+                    <input type="text" id="seoMotCle" placeholder="votre mot-clé">
+                    <div id="seoMotCleError" class="error"></div>
+                </div>
+                <button class="service-button" onclick="analyserSEO()">Analyser le SEO</button>
+                <div id="seoResultats" class="results" style="display:none;">
+                    <h4>Résultats de l'analyse SEO :</h4>
+                    <div id="seoDonnees"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modale IA -->
+    <div id="aiModal" class="modal" role="dialog" aria-labelledby="aiModalTitle" aria-modal="true">
+        <div class="modal-content">
+            <span class="close" onclick="fermerModale('aiModal')" role="button" aria-label="Fermer la modale IA">×</span>
+            <h2 id="aiModalTitle">🤖 Assistant IA Intelligent</h2>
+            <div class="tool-interface">
+                <div class="input-group">
+                    <label for="aiTypeContenu">Type de contenu :</label>
+                    <select id="aiTypeContenu">
+                        <option value="article">Article de blog</option>
+                        <option value="description">Description produit</option>
+                        <option value="email">Email marketing</option>
+                        <option value="social">Post réseaux sociaux</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="aiInstruction">Sujet ou instructions :</label>
+                    <textarea id="aiInstruction" rows="3" placeholder="Décrivez votre demande..."></textarea>
+                    <div id="aiInstructionError" class="error"></div>
+                </div>
+                <button class="service-button" onclick="genererContenu()">Créer le contenu</button>
+                <div id="aiResultats" class="results" style="display:none;">
+                    <h4>Contenu généré :</h4>
+                    <div id="aiDonnees"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modale Finance -->
+    <div id="financeModal" class="modal" role="dialog" aria-labelledby="financeModalTitle" aria-modal="true">
+        <div class="modal-content">
+            <span class="close" onclick="fermerModale('financeModal')" role="button" aria-label="Fermer la modale Finance">×</span>
+            <h2 id="financeModalTitle">💰 Calculateurs Financiers</h2>
+            <div class="tool-interface">
+                <div class="input-group">
+                    <label for="financeCapital">Capital initial (€) :</label>
+                    <input type="number" id="financeCapital" placeholder="10000" min="0">
+                    <div id="financeCapitalError" class="error"></div>
+                </div>
+                <div class="input-group">
+                    <label for="financeTaux">Taux d'intérêt annuel (%) :</label>
+                    <input type="number" step="0.1" id="financeTaux" placeholder="5.5" min="0">
+                    <div id="financeTauxError" class="error"></div>
+                </div>
+                <div class="input-group">
+                    <label for="financeAnnees">Durée (années) :</label>
+                    <input type="number" id="financeAnnees" placeholder="10" min="1">
+                    <div id="financeAnneesError" class="error"></div>
+                </div>
+                <button class="service-button" onclick="calculerInvestissement()">Calculer</button>
+                <div id="financeResultats" class="results" style="display:none;">
+                    <h4>Résultats financiers :</h4>
+                    <div id="financeDonnees"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modale Santé -->
+    <div id="healthModal" class="modal" role="dialog" aria-labelledby="healthModalTitle" aria-modal="true">
+        <div class="modal-content">
+            <span class="close" onclick="fermerModale('healthModal')" role="button" aria-label="Fermer la modale Santé">×</span>
+            <h2 id="healthModalTitle">🏥 Santé & Bien-être</h2>
+            <div class="tool-interface">
+                <div class="input-group">
+                    <label for="healthPoids">Poids (kg) :</label>
+                    <input type="number" id="healthPoids" placeholder="70" min="0">
+                    <div id="healthPoidsError" class="error"></div>
+                </div>
+                <div class="input-group">
+                    <label for="healthTaille">Taille (cm) :</label>
+                    <input type="number" id="healthTaille" placeholder="170" min="0">
+                    <div id="healthTailleError" class="error"></div>
+                </div>
+                <div class="input-group">
+                    <label for="healthAge">Âge :</label>
+                    <input type="number" id="healthAge" placeholder="30" min="1">
+                    <div id="healthAgeError" class="error"></div>
+                </div>
+                <div class="input-group">
+                    <label for="healthGenre">Genre :</label>
+                    <select id="healthGenre">
+                        <option value="male">Homme</option>
+                        <option value="female">Femme</option>
+                    </select>
+                </div>
+                <button class="service-button" onclick="calculerSante()">Calculer</button>
+                <div id="healthResultats" class="results" style="display:none;">
+                    <h4>Résultats santé :</h4>
+                    <div id="healthDonnees"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modale Réseaux Sociaux -->
+    <div id="socialModal" class="modal" role="dialog" aria-labelledby="socialModalTitle" aria-modal="true">
+        <div class="modal-content">
+            <span class="close" onclick="fermerModale('socialModal')" role="button" aria-label="Fermer la modale Réseaux Sociaux">×</span>
+            <h2 id="socialModalTitle">📱 Gestionnaire Réseaux Sociaux</h2>
+            <div class="tool-interface">
+                <div class="input-group">
+                    <label for="socialPlateforme">Plateforme :</label>
+                    <select id="socialPlateforme">
+                        <option value="facebook">Facebook</option>
+                        <option value="instagram">Instagram</option>
+                        <option value="twitter">Twitter</option>
+                        <option value="linkedin">LinkedIn</option>
+                        <option value="tiktok">TikTok</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="socialContenu">Contenu du post :</label>
+                    <textarea id="socialContenu" rows="4" placeholder="Rédigez votre publication..."></textarea>
+                    <div id="socialContenuError" class="error"></div>
+                </div>
+                <div class="input-group">
+                    <label for="socialHashtags">Hashtags :</label>
+                    <input type="text" id="socialHashtags" placeholder="#marketing #business #success">
+                </div>
+                <div class="input-group">
+                    <label for="socialDateHeure">Heure de publication :</label>
+                    <input type="datetime-local" id="socialDateHeure">
+                </div>
+                <button class="service-button" onclick="planifierPublication()">Planifier la publication</button>
+                <div id="socialResultats" class="results" style="display:none;">
+                    <h4>Publication planifiée :</h4>
+                    <div id="socialDonnees"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modale Marketing par E-mail -->
+    <div id="emailModal" class="modal" role="dialog" aria-labelledby="emailModalTitle" aria-modal="true">
+        <div class="modal-content">
+            <span class="close" onclick="fermerModale('emailModal')" role="button" aria-label="Fermer la modale Marketing par E-mail">×</span>
+            <h2 id="emailModalTitle">📧 Campagne Marketing par E-mail</h2>
+            <div class="tool-interface">
+                <div class="input-group">
+                    <label for="emailObjet">Objet de l'e-mail :</label>
+                    <input type="text" id="emailObjet" placeholder="Votre sujet accrocheur">
+                    <div id="emailObjetError" class="error"></div>
+                </div>
+                <div class="input-group">
+                    <label for="emailType">Type de campagne :</label>
+                    <select id="emailType">
+                        <option value="newsletter">Newsletter</option>
+                        <option value="promo">Promotion</option>
+                        <option value="welcome">Bienvenue</option>
+                        <option value="follow-up">Relance</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="emailContenu">Contenu de l'e-mail :</label>
+                    <textarea id="emailContenu" rows="6" placeholder="Rédigez votre e-mail..."></textarea>
+                    <div id="emailContenuError" class="error"></div>
+                </div>
+                <div class="input-group">
+                    <label for="emailListe">Liste de contacts :</label>
+                    <select id="emailListe">
+                        <option value="all">Tous les contacts (2,450)</option>
+                        <option value="premium">Clients Premium (340)</option>
+                        <option value="prospects">Prospects (1,200)</option>
+                        <option value="active">Clients Actifs (910)</option>
+                    </select>
+                </div>
+                <button class="service-button" onclick="creerCampagneEmail()">Créer la campagne</button>
+                <div id="emailResultats" class="results" style="display:none;">
+                    <h4>Aperçu de la campagne :</h4>
+                    <div id="emailDonnees"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modale Analytique -->
+    <div id="analyticsModal" class="modal" role="dialog" aria-labelledby="analyticsModalTitle" aria-modal="true">
+        <div class="modal-content">
+            <span class="close" onclick="fermerModale('analyticsModal')" role="button" aria-label="Fermer la modale Analytique">×</span>
+            <h2 id="analyticsModalTitle">📊 Tableau de Bord Analytique</h2>
+            <div class="tool-interface">
+                <div class="input-group">
+                    <label for="analyticsPeriode">Période d'analyse :</label>
+                    <select id="analyticsPeriode">
+                        <option value="7">7 derniers jours</option>
+                        <option value="30">30 derniers jours</option>
+                        <option value="90">3 derniers mois</option>
+                        <option value="365">Année complète</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="analyticsSource">Source de données :</label>
+                    <select id="analyticsSource">
+                        <option value="website">Site Web</option>
+                        <option value="social">Réseaux Sociaux</option>
+                        <option value="email">Marketing par E-mail</option>
+                        <option value="ads">Publicités</option>
+                    </select>
+                </div>
+                <button class="service-button" onclick="genererAnalytique()">Générer le rapport</button>
+                <div id="analyticsResultats" class="results" style="display:none;">
+                    <h4>Rapport d'analyse :</h4>
+                    <div id="analyticsDonnees"></div>
+                    <canvas id="analyticsGraphique"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modale QR Code -->
+    <div id="qrModal" class="modal" role="dialog" aria-labelledby="qrModalTitle" aria-modal="true">
+        <div class="modal-content">
+            <span class="close" onclick="fermerModale('qrModal')" role="button" aria-label="Fermer la modale QR Code">×</span>
+            <h2 id="qrModalTitle">🔲 Générateur QR Code</h2>
+            <div class="tool-interface">
+                <div class="input-group">
+                    <label for="qrType">Type de QR Code :</label>
+                    <select id="qrType">
+                        <option value="url">URL/Lien</option>
+                        <option value="text">Texte</option>
+                        <option value="wifi">WiFi</option>
+                        <option value="email">E-mail</option>
+                        <option value="phone">Téléphone</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="qrContenu">Contenu :</label>
+                    <input type="text" id="qrContenu" placeholder="Entrez votre contenu...">
+                    <div id="qrContenuError" class="error"></div>
+                </div>
+                <div class="input-group">
+                    <label for="qrTaille">Taille :</label>
+                    <select id="qrTaille">
+                        <option value="200">200x200px</option>
+                        <option value="300">300x300px</option>
+                        <option value="400">400x400px</option>
+                        <option value="500">500x500px</option>
+                    </select>
+                </div>
+                <button class="service-button" onclick="genererQRCode()">Générer QR Code</button>
+                <div id="qrResultats" class="results" style="display:none;">
+                    <h4>Votre QR Code :</h4>
+                    <div id="qrDonnees"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modale Gestionnaire Mots de Passe -->
+    <div id="passwordModal" class="modal" role="dialog" aria-labelledby="passwordModalTitle" aria-modal="true">
+        <div class="modal-content">
+            <span class="close" onclick="fermerModale('passwordModal')" role="button" aria-label="Fermer la modale Mots de Passe">×</span>
+            <h2 id="passwordModalTitle">🔐 Gestionnaire de Mots de Passe</h2>
+            <div class="tool-interface">
+                <div class="input-group">
+                    <label for="passwordLongueur">Longueur du mot de passe :</label>
+                    <input type="range" id="passwordLongueur" min="8" max="32" value="16" oninput="mettreAJourLongueurMotDePasse()">
+                    <span id="passwordLongueurValeur">16</span> caractères
+                </div>
+                <div class="input-group">
+                    <label>Options :</label>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <label><input type="checkbox" id="inclureMajuscules" checked> Majuscules (A-Z)</label>
+                        <label><input type="checkbox" id="inclureMinuscules" checked> Minuscules (a-z)</label>
+                        <label><input type="checkbox" id="inclureChiffres" checked> Chiffres (0-9)</label>
+                        <label><input type="checkbox" id="inclureSymboles" checked> Symboles (!@#$%)</label>
+                    </div>
+                    <div id="passwordOptionsError" class="error"></div>
+                </div>
+                <button class="service-button" onclick="genererMotDePasse()">Générer mot de passe</button>
+                <div class="input-group">
+                    <label for="verifierMotDePasse">Vérifier un mot de passe existant :</label>
+                    <input type="password" id="verifierMotDePasse" placeholder="Entrez votre mot de passe à vérifier">
+                    <div id="verifierMotDePasseError" class="error"></div>
+                    <button class="service-button" onclick="verifierForceMotDePasse()" style="margin-top: 0.5rem;">Vérifier la force</button>
+                </div>
+                <div id="passwordResultats" class="results" style="display:none;">
+                    <h4>Résultats :</h4>
+                    <div id="passwordDonnees"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modale Convertisseur Devises -->
+    <div id="currencyModal" class="modal" role="dialog" aria-labelledby="currencyModalTitle" aria-modal="true">
+        <div class="modal-content">
+            <span class="close" onclick="fermerModale('currencyModal')" role="button" aria-label="Fermer la modale Convertisseur Devises">×</span>
+            <h2 id="currencyModalTitle">💱 Convertisseur de Devises</h2>
+            <div class="tool-interface">
+                <div class="input-group">
+                    <label for="currencyMontant">Montant :</label>
+                    <input type="number" id="currencyMontant" placeholder="100" step="0.01" min="0">
+                    <div id="currencyMontantError" class="error"></div>
+                </div>
+                <div class="input-group">
+                    <label for="currencyDe">De (devise source) :</label>
+                    <select id="currencyDe">
+                        <option value="EUR">EUR - Euro</option>
+                        <option value="USD">USD - Dollar américain</option>
+                        <option value="GBP">GBP - Livre sterling</option>
+                        <option value="JPY">JPY - Yen japonais</option>
+                        <option value="CHF">CHF - Franc suisse</option>
+                        <option value="CAD">CAD - Dollar canadien</option>
+                        <option value="AUD">AUD - Dollar australien</option>
+                        <option value="CNY">CNY - Yuan chinois</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="currencyVers">Vers (devise cible) :</label>
+                    <select id="currencyVers">
+                        <option value="USD">USD - Dollar américain</option>
+                        <option value="EUR">EUR - Euro</option>
+                        <option value="GBP">GBP - Livre sterling</option>
+                        <option value="JPY">JPY - Yen japonais</option>
+                        <option value="CHF">CHF - Franc suisse</option>
+                        <option value="CAD">CAD - Dollar canadien</option>
+                        <option value="AUD">AUD - Dollar australien</option>
+                        <option value="CNY">CNY - Yuan chinois</option>
+                    </select>
+                </div>
+                <button class="service-button" onclick="convertirDevise()">Convertir</button>
+                <div id="currencyResultats" class="results" style="display:none;">
+                    <h4>Résultat de la conversion :</h4>
+                    <div id="currencyDonnees"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modale Gestionnaire Fuseaux Horaires -->
+    <div id="timezoneModal" class="modal" role="dialog" aria-labelledby="timezoneModalTitle" aria-modal="true">
+        <div class="modal-content">
+            <span class="close" onclick="fermerModale('timezoneModal')" role="button" aria-label="Fermer la modale Fuseaux Horaires">×</span>
+            <h2 id="timezoneModalTitle">🌍 Gestionnaire de Fuseaux Horaires</h2>
+            <div class="tool-interface">
+                <div class="input-group">
+                    <label for="timezoneDe">Votre fuseau horaire :</label>
+                    <select id="timezoneDe">
+                        <option value="Europe/Paris">Paris (CEST)</option>
+                        <option value="America/New_York">New York (EST)</option>
+                        <option value="America/Los_Angeles">Los Angeles (PST)</option>
+                        <option value="Asia/Tokyo">Tokyo (JST)</option>
+                        <option value="Europe/London">London (GMT)</option>
+                        <option value="Australia/Sydney">Sydney (AEST)</option>
+                        <option value="Asia/Shanghai">Shanghai (CST)</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="timezoneHeure">Heure locale :</label>
+                    <input type="time" id="timezoneHeure" value="12:00">
+                    <div id="timezoneHeureError" class="error"></div>
+                </div>
+                <button class="service-button" onclick="calculerFuseauxHoraires()">Calculer les heures</button>
+                <div id="timezoneResultats" class="results" style="display:none;">
+                    <h4>Heures dans le monde :</h4>
+                    <div id="timezoneDonnees"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modale Raccourcisseur URL -->
+    <div id="urlModal" class="modal" role="dialog" aria-labelledby="urlModalTitle" aria-modal="true">
+        <div class="modal-content">
+            <span class="close" onclick="fermerModale('urlModal')" role="button" aria-label="Fermer la modale Raccourcisseur URL">×</span>
+            <h2 id="urlModalTitle">🔗 Raccourcisseur d'URL</h2>
+            <div class="tool-interface">
+                <div class="input-group">
+                    <label for="urlARaccourcir">URL à raccourcir :</label>
+                    <input type="url" id="urlARaccourcir" placeholder="https://exemple.com/page-tres-longue-url">
+                    <div id="urlARaccourcirError" class="error"></div>
+                </div>
+                <div class="input-group">
+                    <label for="urlAlias">Alias personnalisé (optionnel) :</label>
+                    <input type="text" id="urlAlias" placeholder="mon-lien-perso">
+                </div>
+                <div class="input-group">
+                    <label for="urlExpiration">Expiration :</label>
+                    <select id="urlExpiration">
+                        <option value="never">Jamais</option>
+                        <option value="1">1 jour</option>
+                        <option value="7">7 jours</option>
+                        <option value="30">30 jours</option>
+                        <option value="365">1 an</option>
+                    </select>
+                </div>
+                <button class="service-button" onclick="raccourcirURL()">Raccourcir l'URL</button>
+                <div id="urlResultats" class="results" style="display:none;">
+                    <h4>URL raccourcie :</h4>
+                    <div id="urlDonnees"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Fonction utilitaire pour créer un élément avec du texte
+        function creerElementAvecTexte(tag, texte) {
+            const element = document.createElement(tag);
+            element.textContent = texte;
+            return element;
+        }
+
+        // Afficher un message d'erreur
+        function afficherErreur(idErreur, message) {
+            const erreurDiv = document.getElementById(idErreur);
+            erreurDiv.textContent = message;
+            erreurDiv.style.display = 'block';
+            setTimeout(() => erreurDiv.style.display = 'none', 5000);
+            return false;
+        }
+
+        // Effacer les erreurs
+        function effacerErreur(idErreur) {
+            const erreurDiv = document.getElementById(idErreur);
+            erreurDiv.textContent = '';
+            erreurDiv.style.display = 'none';
+        }
+
+        // Basculer le menu mobile
+        function basculerMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
+
+        // Gestion des modales
+        function ouvrirModale(idModale) {
+            const modale = document.getElementById(idModale);
+            modale.style.display = 'block';
+            setTimeout(() => modale.classList.add('active'), 10);
+            modale.querySelector('.modal-content').focus();
+        }
+
+        function fermerModale(idModale) {
+            const modale = document.getElementById(idModale);
+            modale.classList.remove('active');
+            setTimeout(() => {
+                modale.style.display = 'none';
+                const erreurs = modale.querySelectorAll('.error');
+                erreurs.forEach(e => {
+                    e.textContent = '';
+                    e.style.display = 'none';
+                });
+                const resultats = modale.querySelector('.results');
+                if (resultats) resultats.style.display = 'none';
+            }, 300);
+        }
+
+        // Fermer la modale en cliquant à l'extérieur
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                fermerModale(event.target.id);
+            }
+        }
+
+        // Gérer la navigation au clavier pour les modales
+        document.querySelectorAll('.modal').forEach(modale => {
+            modale.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    fermerModale(modale.id);
+                }
+                if (e.key === 'Tab') {
+                    const focusableElements = modale.querySelectorAll('input, textarea, select, button, .close');
+                    const firstElement = focusableElements[0];
+                    const lastElement = focusableElements[focusableElements.length - 1];
+                    if (!e.shiftKey && document.activeElement === lastElement) {
+                        e.preventDefault();
+                        firstElement.focus();
+                    } else if (e.shiftKey && document.activeElement === firstElement) {
+                        e.preventDefault();
+                        lastElement.focus();
+                    }
+                }
+            });
+        });
+
+        // Défilement fluide pour la navigation
+        document.querySelectorAll('.nav-links a, .cta-button[href^="#"]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Glisser-déposer pour la publicité flottante
+        const floatingAd = document.querySelector('.floating-ad');
+        let isDragging = false, currentX, currentY, initialX, initialY;
+
+        floatingAd.addEventListener('mousedown', (e) => {
+            initialX = e.clientX - currentX;
+            initialY = e.clientY - currentY;
+            isDragging = true;
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                e.preventDefault();
+                currentX = e.clientX - initialX;
+                currentY = e.clientY - initialY;
+                floatingAd.style.left = currentX + 'px';
+                floatingAd.style.top = currentY + 'px';
+                floatingAd.style.bottom = 'auto';
+            }
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+
+        // Initialiser la position de la publicité flottante
+        currentX = 20;
+        currentY = window.innerHeight - floatingAd.offsetHeight - 20;
+        floatingAd.style.left = currentX + 'px';
+        floatingAd.style.top = currentY + 'px';
+
+        // Analyse SEO
+        function analyserSEO() {
+            const url = document.getElementById('seoUrl').value;
+            const motCle = document.getElementById('seoMotCle').value;
+
+            effacerErreur('seoUrlError');
+            effacerErreur('seoMotCleError');
+
+            if (!url) return afficherErreur('seoUrlError', 'Veuillez entrer une URL valide');
+            if (!motCle) return afficherErreur('seoMotCleError', 'Veuillez entrer un mot-clé');
+
+            const scoreSEO = Math.floor(Math.random() * 40) + 60;
+            const suggestions = [
+                'Optimiser les balises meta',
+                'Améliorer la vitesse de chargement',
+                'Ajouter plus de contenu pertinent',
+                'Optimiser les images',
+                'Créer des liens internes'
+            ];
+
+            const donneesDiv = document.getElementById('seoDonnees');
+            donneesDiv.innerHTML = '';
+            donneesDiv.appendChild(creerElementAvecTexte('p', `Score SEO : ${scoreSEO}/100`));
+            donneesDiv.appendChild(creerElementAvecTexte('p', `URL analysée : ${url}`));
+            donneesDiv.appendChild(creerElementAvecTexte('p', `Mot-clé : ${motCle}`));
+            donneesDiv.appendChild(creerElementAvecTexte('p', 'Suggestions d\'amélioration :'));
+            const ul = document.createElement('ul');
+            suggestions.forEach(s => {
+                const li = document.createElement('li');
+                li.textContent = s;
+                ul.appendChild(li);
+            });
+            donneesDiv.appendChild(ul);
+            document.getElementById('seoResultats').style.display = 'block';
+        }
+
+        // Génération de contenu IA
+        function genererContenu() {
+            const typeContenu = document.getElementById('aiTypeContenu').value;
+            const instruction = document.getElementById('aiInstruction').value;
+
+            effacerErreur('aiInstructionError');
+            if (!instruction) return afficherErreur('aiInstructionError', 'Veuillez décrire votre demande');
+
+            const contenus = {
+                article: `# ${instruction}\n\nDans cet article, nous allons explorer ${instruction} en détail. Cette approche innovante permet d'améliorer significativement vos résultats...\n\n## Points clés\n- Analyse approfondie\n- Stratégie personnalisée\n- Résultats mesurables`,
+                description: `Découvrez ${instruction} - la solution parfaite pour vos besoins. Qualité premium, design élégant et performance exceptionnelle. Commandez maintenant !`,
+                email: `Objet: Découvrez ${instruction}\n\nBonjour,\n\nNous sommes ravis de vous présenter ${instruction}. Cette nouveauté va révolutionner votre façon de travailler.\n\nCordialement,\nL'équipe ProTools`,
+                social: `🔥 Nouveau : ${instruction} !\n\n✅ Innovation\n✅ Qualité\n✅ Performance\n\n#innovation #${instruction.replace(/\s+/g, '')}`
+            };
+
+            const donneesDiv = document.getElementById('aiDonnees');
+            donneesDiv.innerHTML = '';
+            const pre = document.createElement('pre');
+            pre.textContent = contenus[typeContenu];
+            donneesDiv.appendChild(pre);
+            document.getElementById('aiResultats').style.display = 'block';
+        }
+
+        // Calcul financier
+        function calculerInvestissement() {
+            const capital = parseFloat(document.getElementById('financeCapital').value);
+            const taux = parseFloat(document.getElementById('financeTaux').value) / 100;
+            const annees = parseInt(document.getElementById('financeAnnees').value);
+
+            effacerErreur('financeCapitalError');
+            effacerErreur('financeTauxError');
+            effacerErreur('financeAnneesError');
+
+            if (isNaN(capital) || capital <= 0) return afficherErreur('financeCapitalError', 'Veuillez entrer un capital valide (positif)');
+            if (isNaN(taux) || taux < 0) return afficherErreur('financeTauxError', 'Veuillez entrer un taux d\'intérêt valide (non négatif)');
+            if (isNaN(annees) || annees <= 0) return afficherErreur('financeAnneesError', 'Veuillez entrer une durée valide (positive)');
+
+            const montantFinal = capital * Math.pow(1 + taux, annees);
+            const benefice = montantFinal - capital;
+
+            const donneesDiv = document.getElementById('financeDonnees');
+            donneesDiv.innerHTML = '';
+            donneesDiv.appendChild(creerElementAvecTexte('p', `Capital initial : ${capital.toLocaleString('fr-FR')} €`));
+            donneesDiv.appendChild(creerElementAvecTexte('p', `Montant final : ${montantFinal.toLocaleString('fr-FR', {maximumFractionDigits: 2})} €`));
+            donneesDiv.appendChild(creerElementAvecTexte('p', `Bénéfice : ${benefice.toLocaleString('fr-FR', {maximumFractionDigits: 2})} €`));
+            donneesDiv.appendChild(creerElementAvecTexte('p', `Rendement total : ${((benefice/capital) * 100).toFixed(2)}%`));
+            document.getElementById('financeResultats').style.display = 'block';
+        }
+
+        // Calcul santé
+        function calculerSante() {
+            const poids = parseFloat(document.getElementById('healthPoids').value);
+            const taille = parseFloat(document.getElementById('healthTaille').value) / 100;
+            const age = parseInt(document.getElementById('healthAge').value);
+            const genre = document.getElementById('healthGenre').value;
+
+            effacerErreur('healthPoidsError');
+            effacerErreur('healthTailleError');
+            effacerErreur('healthAgeError');
+
+            if (isNaN(poids) || poids <= 0) return afficherErreur('healthPoidsError', 'Veuillez entrer un poids valide (positif)');
+            if (isNaN(taille) || taille <= 0) return afficherErreur('healthTailleError', 'Veuillez entrer une taille valide (positive)');
+            if (isNaN(age) || age <= 0) return afficherErreur('healthAgeError', 'Veuillez entrer un âge valide (positif)');
+
+            const imc = poids / (taille * taille);
+            let categorieIMC = '';
+            if (imc < 18.5) categorieIMC = 'Insuffisance pondérale';
+            else if (imc < 25) categorieIMC = 'Poids normal';
+            else if (imc < 30) categorieIMC = 'Surpoids';
+            else categorieIMC = 'Obésité';
+
+            let bmr;
+            if (genre === 'male') {
+                bmr = 88.362 + (13.397 * poids) + (4.799 * taille * 100) - (5.677 * age);
+            } else {
+                bmr = 447.593 + (9.247 * poids) + (3.098 * taille * 100) - (4.330 * age);
+            }
+
+            const donneesDiv = document.getElementById('healthDonnees');
+            donneesDiv.innerHTML = '';
+            donneesDiv.appendChild(creerElementAvecTexte('p', `IMC : ${imc.toFixed(1)} (${categorieIMC})`));
+            donneesDiv.appendChild(creerElementAvecTexte('p', `Métabolisme de base : ${Math.round(bmr)} calories/jour`));
+            donneesDiv.appendChild(creerElementAvecTexte('p', `Poids idéal estimé : ${(22 * taille * taille).toFixed(1)} kg`));
+            donneesDiv.appendChild(creerElementAvecTexte('p', 'Besoins caloriques journaliers :'));
+            const ul = document.createElement('ul');
+            ul.appendChild(creerElementAvecTexte('li', `Sédentaire : ${Math.round(bmr * 1.2)} cal`));
+            ul.appendChild(creerElementAvecTexte('li', `Actif : ${Math.round(bmr * 1.55)} cal`));
+            ul.appendChild(creerElementAvecTexte('li', `Très actif : ${Math.round(bmr * 1.9)} cal`));
+            donneesDiv.appendChild(ul);
+            document.getElementById('healthResultats').style.display = 'block';
+        }
+
+        // Gestionnaire réseaux sociaux
+        function planifierPublication() {
+            const plateforme = document.getElementById('socialPlateforme').value;
+            const contenu = document.getElementById('socialContenu').value;
+            const hashtags = document.getElementById('socialHashtags').value;
+            const dateHeure = document.getElementById('socialDateHeure').value;
+
+            effacerErreur('socialContenuError');
+            if (!contenu) return afficherErreur('socialContenuError', 'Veuillez saisir le contenu de votre publication');
+
+            const nomsPlateformes = {
+                facebook: 'Facebook',
+                instagram: 'Instagram',
+                twitter: 'Twitter',
+                linkedin: 'LinkedIn',
+                tiktok: 'TikTok'
+            };
+
+            const porteeEstimee = Math.floor(Math.random() * 5000) + 1000;
+            const meilleurMoment = ['09:00', '12:00', '18:00', '20:00'][Math.floor(Math.random() * 4)];
+
+            const donneesDiv = document.getElementById('socialDonnees');
+            donneesDiv.innerHTML = '';
+            donneesDiv.appendChild(creerElementAvecTexte('p', `Plateforme : ${nomsPlateformes[plateforme]}`));
+            donneesDiv.appendChild(creerElementAvecTexte('p', `Contenu : ${contenu}`));
+            donneesDiv.appendChild(creerElementAvecTexte('p', `Hashtags : ${hashtags || 'Aucun'}`));
+            donneesDiv.appendChild(creerElementAvecTexte('p', `Publication prévue : ${dateHeure || 'Immédiatement'}`));
+            donneesDiv.appendChild(creerElementAvecTexte('p', `Portée estimée : ${porteeEstimee.toLocaleString()} personnes`));
+            donneesDiv.appendChild(creerElementAvecTexte('p', `💡 Conseil : ${meilleurMoment} est généralement le meilleur moment pour publier sur ${nomsPlateformes[plateforme]}`));
+            document.getElementById('socialResultats').style.display = 'block';
+        }
+
+        // Marketing par e-mail
+        function creerCampagneEmail() {
+            const objet = document.getElementById('emailObjet').value;
+            const type = document.getElementById('emailType').value;
+            const contenu = document.getElementById('emailContenu').value;
+            const liste = document.getElementById('emailListe').value;
+
+            effacerErreur('emailObjetError');
+            effacerErreur('emailContenuError');
+
+            if (!objet) return afficherErreur('emailObjetError', 'Veuillez remplir l\'objet de l\'e-mail');
+            if (!contenu) return afficherErreur('emailContenuError', 'Veuillez remplir le contenu de l\'e-mail');
+
+            const taillesListes = {
+                all: 2450,
+                premium: 340,
+                prospects: 1200,
+                active: 910
+            };
+
+            const tauxOuvertureEstime = Math.floor(Math.random() * 20) + 15;
+            const tauxClicEstime = Math.floor(Math.random() * 8) + 2;
+
+            const donneesDiv = document.getElementById('emailDonnees');
+            donneesDiv.innerHTML = '';
+            donneesDiv.appendChild(creerElementAvecTexte('p', `Objet : ${objet}`));
+            donneesDiv.appendChild(creerElementAvecTexte('p', `Type : ${type}`));
+            donneesDiv.appendChild(creerElementAvecTexte('p', `Liste ciblée : ${taillesListes[liste]} contacts`));
+            donneesDiv.appendChild(creerElementAvecTexte('p', `Taux d'ouverture estimé : ${tauxOuvertureEstime}%`));
+            donneesDiv.appendChild(creerElementAvecTexte('p', `Taux de clic estimé : ${tauxClicEstime}%`));
+            donneesDiv.appendChild(creerElementAvecTexte('p', `ROI prévu : ${(taillesListes[liste] * tauxClicEstime * 0.25).toFixed(1)}€`));
+            const apercuDiv = document.createElement('div');
+            apercuDiv.style.background = '#f0f8ff';
+            apercuDiv.style.padding = '1rem';
+            apercuDiv.style.borderRadius = '8px';
+            apercuDiv.style.marginTop = '1rem';
+            apercuDiv.appendChild(creerElementAvecTexte('strong', 'Aperçu :'));
+            apercuDiv.appendChild(document.createElement('br'));
+            apercuDiv.appendChild(creerElementAvecTexte('em', objet));
+            apercuDiv.appendChild(document.createElement('br'));
+            apercuDiv.appendChild(creerElementAvecTexte('span', contenu.substring(0, 100) + '...'));
+            donneesDiv.appendChild(apercuDiv);
+            document.getElementById('emailResultats').style.display = 'block';
+        }
+
+        // Analytique
+        function genererAnalytique() {
+            const periode = document.getElementById('analyticsPeriode').value;
+            const source = document.getElementById('analyticsSource').value;
+
+            const metriquesDeBase = {
+                website: { visiteurs: 15000, pagesVues: 45000, rebond: 35, duree: 245 },
+                social: { abonnes: 8500, engagement: 4.2, portee: 125000, clics: 3400 },
+                email: { livres: 12000, ouverts: 2400, cliques: 360, desinscrits: 24 },
+                ads: { impressions: 250000, clics: 7500, ctr: 3.0, cout: 1250 }
+            };
+
+            const multiplicateurPeriode = parseInt(periode) / 30;
+            const metriques = metriquesDeBase[source];
+
+            const donneesDiv = document.getElementById('analyticsDonnees');
+            donneesDiv.innerHTML = '';
+
+            if (source === 'website') {
+                donneesDiv.appendChild(creerElementAvecTexte('p', `📈 Visiteurs uniques : ${(metriques.visiteurs * multiplicateurPeriode).toLocaleString()}`));
+                donneesDiv.appendChild(creerElementAvecTexte('p', `👁️ Pages vues : ${(metriques.pagesVues * multiplicateurPeriode).toLocaleString()}`));
+                donneesDiv.appendChild(creerElementAvecTexte('p', `⚡ Taux de rebond : ${metriques.rebond}%`));
+                donneesDiv.appendChild(creerElementAvecTexte('p', `⏱️ Durée moyenne : ${Math.floor(metriques.duree / 60)}min ${metriques.duree % 60}s`));
+                donneesDiv.appendChild(creerElementAvecTexte('p', `📱 Top Pages : /accueil, /services, /contact`));
+            } else if (source === 'social') {
+                donneesDiv.appendChild(creerElementAvecTexte('p', `👥 Abonnés totaux : ${metriques.abonnes.toLocaleString()}`));
+                donneesDiv.appendChild(creerElementAvecTexte('p', `💬 Taux d'engagement : ${metriques.engagement}%`));
+                donneesDiv.appendChild(creerElementAvecTexte('p', `👀 Portée totale : ${(metriques.portee * multiplicateurPeriode).toLocaleString()}`));
+                donneesDiv.appendChild(creerElementAvecTexte('p', `🔗 Clics générés : ${(metriques.clics * multiplicateurPeriode).toLocaleString()}`));
+                donneesDiv.appendChild(creerElementAvecTexte('p', `📊 Meilleur contenu : Posts vidéo (+127% engagement)`));
+            } else if (source === 'email') {
+                donneesDiv.appendChild(creerElementAvecTexte('p', `📧 E-mails livrés : ${(metriques.livres * multiplicateurPeriode).toLocaleString()}`));
+                donneesDiv.appendChild(creerElementAvecTexte('p', `👀 E-mails ouverts : ${(metriques.ouverts * multiplicateurPeriode).toLocaleString()}`));
+                donneesDiv.appendChild(creerElementAvecTexte('p', `🔗 Clics : ${(metriques.cliques * multiplicateurPeriode).toLocaleString()}`));
+                donneesDiv.appendChild(creerElementAvecTexte('p', `🚫 Désinscrits : ${(metriques.desinscrits * multiplicateurPeriode).toLocaleString()}`));
+            } else if (source === 'ads') {
+                donneesDiv.appendChild(creerElementAvecTexte('p', `👁️ Impressions : ${(metriques.impressions * multiplicateurPeriode).toLocaleString()}`));
+                donneesDiv.appendChild(creerElementAvecTexte('p', `🔗 Clics : ${(metriques.clics * multiplicateurPeriode).toLocaleString()}`));
+                donneesDiv.appendChild(creerElementAvecTexte('p', `📈 CTR : ${metriques.ctr}%`));
+                donneesDiv.appendChild(creerElementAvecTexte('p', `💸 Coût : ${(metriques.cout * multiplicateurPeriode).toLocaleString()}€`));
+            }
+
+            const ctx = document.getElementById('analyticsGraphique').getContext('2d');
+            if (window.analyticsChart) window.analyticsChart.destroy();
+            window.analyticsChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: source === 'website' ? ['Visiteurs', 'Pages vues', 'Rebond', 'Durée'] :
+                            source === 'social' ? ['Abonnés', 'Portée', 'Engagement', 'Clics'] :
+                            source === 'email' ? ['Livrés', 'Ouverts', 'Cliqués', 'Désinscrits'] :
+                            ['Impressions', 'Clics', 'CTR', 'Coût'],
+                    datasets: [{
+                        label: `Métriques ${source}`,
+                        data: source === 'website' ? [
+                            metriques.visiteurs * multiplicateurPeriode,
+                            metriques.pagesVues * multiplicateurPeriode,
+                            metriques.rebond,
+                            metriques.duree
+                        ] : source === 'social' ? [
+                            metriques.abonnes,
+                            metriques.portee * multiplicateurPeriode,
+                            metriques.engagement,
+                            metriques.clics * multiplicateurPeriode
+                        ] : source === 'email' ? [
+                            metriques.livres * multiplicateurPeriode,
+                            metriques.ouverts * multiplicateurPeriode,
+                            metriques.cliques * multiplicateurPeriode,
+                            metriques.desinscrits * multiplicateurPeriode
+                        ] : [
+                            metriques.impressions * multiplicateurPeriode,
+                            metriques.clics * multiplicateurPeriode,
+                            metriques.ctr,
+                            metriques.cout * multiplicateurPeriode
+                        ],
+                        backgroundColor: ['#667eea', '#764ba2', '#ff6b6b', '#ee5a24'],
+                        borderColor: ['#667eea', '#764ba2', '#ff6b6b', '#ee5a24'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        }
+                    }
+                }
+            });
+
+            document.getElementById('analyticsResultats').style.display = 'block';
+        }
+
+        // Générateur QR Code
+        function genererQRCode() {
+            const type = document.getElementById('qrType').value;
+            const contenu = document.getElementById('qrContenu').value;
+            const taille = document.getElementById('qrTaille').value;
+
+            effacerErreur('qrContenuError');
+            if (!contenu) return afficherErreur('qrContenuError', 'Veuillez saisir le contenu pour le QR Code');
+
+            const urlQRCode = `https://api.qrserver.com/v1/create-qr-code/?size=${taille}x${taille}&data=${encodeURIComponent(contenu)}`;
+
+            const donneesDiv = document.getElementById('qrDonnees');
+            donneesDiv.innerHTML = '';
+            const divCentre = document.createElement('div');
+            divCentre.style.textAlign = 'center';
+            const img = document.createElement('img');
+            img.src = urlQRCode;
+            img.alt = 'QR Code';
+            img.style.maxWidth = '100%';
+            img.setAttribute('loading', 'lazy');
+            divCentre.appendChild(img);
+            divCentre.appendChild(creerElementAvecTexte('p', `Type : ${type}`));
+            divCentre.appendChild(creerElementAvecTexte('p', `Contenu : ${contenu}`));
+            donneesDiv.appendChild(divCentre);
+            document.getElementById('qrResultats').style.display = 'block';
+        }
+
+        // Gestionnaire mots de passe (suite)
+        function genererMotDePasse() {
+            const longueur = parseInt(document.getElementById('passwordLongueur').value);
+            const inclureMajuscules = document.getElementById('inclureMajuscules').checked;
+            const inclureMinuscules = document.getElementById('inclureMinuscules').checked;
+            const inclureChiffres = document.getElementById('inclureChiffres').checked;
+            const inclureSymboles = document.getElementById('inclureSymboles').checked;
+
+            effacerErreur('passwordOptionsError');
+            if (!inclureMajuscules && !inclureMinuscules && !inclureChiffres && !inclureSymboles) {
+                return afficherErreur('passwordOptionsError', 'Veuillez sélectionner au moins une option');
+            }
+
+            const majuscules = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const minuscules = 'abcdefghijklmnopqrstuvwxyz';
+            const chiffres = '0123456789';
+            const symboles = '!@#$%^&*()_+-=[]{}|;:,.<>?';
+
+            let caracteres = '';
+            if (inclureMajuscules) caracteres += majuscules;
+            if (inclureMinuscules) caracteres += minuscules;
+            if (inclureChiffres) caracteres += chiffres;
+            if (inclureSymboles) caracteres += symboles;
+
+            let motDePasse = '';
+            for (let i = 0; i < longueur; i++) {
+                const indexAleatoire = Math.floor(Math.random() * caracteres.length);
+                motDePasse += caracteres[indexAleatoire];
+            }
+
+            const donneesDiv = document.getElementById('passwordDonnees');
+            donneesDiv.innerHTML = '';
+            donneesDiv.appendChild(creerElementAvecTexte('p', `Mot de passe généré : ${motDePasse}`));
+            donneesDiv.appendChild(creerElementAvecTexte('p', `Longueur : ${longueur} caractères`));
+            const boutonCopier = document.createElement('button');
+            boutonCopier.className = 'service-button';
+            boutonCopier.textContent = 'Copier';
+            boutonCopier.onclick = () => {
+                navigator.clipboard.writeText(motDePasse);
+                boutonCopier.textContent = 'Copié !';
+                setTimeout(() => boutonCopier.textContent = 'Copier', 2000);
+            };
+            donneesDiv.appendChild(boutonCopier);
+            document.getElementById('passwordResultats').style.display = 'block';
+        }
+
+        function verifierForceMotDePasse() {
+            const motDePasse = document.getElementById('verifierMotDePasse').value;
+
+            effacerErreur('verifierMotDePasseError');
+            if (!motDePasse) return afficherErreur('verifierMotDePasseError', 'Veuillez entrer un mot de passe à vérifier');
+
+            let score = 0;
+            if (motDePasse.length >= 8) score += 20;
+            if (motDePasse.length >= 12) score += 20;
+            if (/[A-Z]/.test(motDePasse)) score += 20;
+            if (/[0-9]/.test(motDePasse)) score += 20;
+            if (/[!@#$%^&*()_+\-=\[\]{}|;:,.<>?]/.test(motDePasse)) score += 20;
+
+            let force = 'Faible';
+            if (score >= 80) force = 'Forte';
+            else if (score >= 60) force = 'Moyenne';
+
+            const donneesDiv = document.getElementById('passwordDonnees');
+            donneesDiv.innerHTML = '';
+            donneesDiv.appendChild(creerElementAvecTexte('p', `Force du mot de passe : ${force}`));
+            donneesDiv.appendChild(creerElementAvecTexte('p', `Score : ${score}/100`));
+            const conseils = [];
+            if (motDePasse.length < 8) conseils.push('Utilisez au moins 8 caractères');
+            if (!/[A-Z]/.test(motDePasse)) conseils.push('Ajoutez des majuscules');
+            if (!/[0-9]/.test(motDePasse)) conseils.push('Ajoutez des chiffres');
+            if (!/[!@#$%^&*()_+\-=\[\]{}|;:,.<>?]/.test(motDePasse)) conseils.push('Ajoutez des symboles');
+            if (conseils.length > 0) {
+                donneesDiv.appendChild(creerElementAvecTexte('p', 'Conseils pour améliorer :'));
+                const ul = document.createElement('ul');
+                conseils.forEach(c => ul.appendChild(creerElementAvecTexte('li', c)));
+                donneesDiv.appendChild(ul);
+            }
+            document.getElementById('passwordResultats').style.display = 'block';
+        }
+
+        // Convertisseur de devises
+        async function convertirDevise() {
+            const montant = parseFloat(document.getElementById('currencyMontant').value);
+            const deviseDe = document.getElementById('currencyDe').value;
+            const deviseVers = document.getElementById('currencyVers').value;
+
+            effacerErreur('currencyMontantError');
+            if (isNaN(montant) || montant <= 0) return afficherErreur('currencyMontantError', 'Veuillez entrer un montant valide (positif)');
+
+            // Taux de change simulés (à remplacer par une API en production)
+            const tauxDeChange = {
+                'EUR': { 'EUR': 1, 'USD': 1.09, 'GBP': 0.85, 'JPY': 170.52, 'CHF': 0.99, 'CAD': 1.49, 'AUD': 1.64, 'CNY': 7.90 },
+                'USD': { 'EUR': 0.92, 'USD': 1, 'GBP': 0.78, 'JPY': 156.45, 'CHF': 0.91, 'CAD': 1.37, 'AUD': 1.51, 'CNY': 7.24 },
+                'GBP': { 'EUR': 1.18, 'USD': 1.28, 'GBP': 1, 'JPY': 200.65, 'CHF': 1.17, 'CAD': 1.75, 'AUD': 1.93, 'CNY': 9.29 },
+                'JPY': { 'EUR': 0.0059, 'USD': 0.0064, 'GBP': 0.0050, 'JPY': 1, 'CHF': 0.0058, 'CAD': 0.0087, 'AUD': 0.0096, 'CNY': 0.046 },
+                'CHF': { 'EUR': 1.01, 'USD': 1.10, 'GBP': 0.86, 'JPY': 171.76, 'CHF': 1, 'CAD': 1.50, 'AUD': 1.65, 'CNY': 7.96 },
+                'CAD': { 'EUR': 0.67, 'USD': 0.73, 'GBP': 0.57, 'JPY': 114.51, 'CHF': 0.67, 'CAD': 1, 'AUD': 1.10, 'CNY': 5.31 },
+                'AUD': { 'EUR': 0.61, 'USD': 0.66, 'GBP': 0.52, 'JPY': 103.88, 'CHF': 0.61, 'CAD': 0.91, 'AUD': 1, 'CNY': 4.82 },
+                'CNY': { 'EUR': 0.13, 'USD': 0.14, 'GBP': 0.11, 'JPY': 21.56, 'CHF': 0.13, 'CAD': 0.19, 'AUD': 0.21, 'CNY': 1 }
+            };
+
+            try {
+                // Simuler une requête API
+                await new Promise(resolve => setTimeout(resolve, 500));
+                const resultat = montant * tauxDeChange[deviseDe][deviseVers];
+                const donneesDiv = document.getElementById('currencyDonnees');
+                donneesDiv.innerHTML = '';
+                donneesDiv.appendChild(creerElementAvecTexte('p', `Montant : ${montant.toLocaleString('fr-FR')} ${deviseDe}`));
+                donneesDiv.appendChild(creerElementAvecTexte('p', `Converti : ${resultat.toLocaleString('fr-FR', {maximumFractionDigits: 2})} ${deviseVers}`));
+                donneesDiv.appendChild(creerElementAvecTexte('p', `Taux appliqué : 1 ${deviseDe} = ${tauxDeChange[deviseDe][deviseVers].toFixed(4)} ${deviseVers}`));
+                document.getElementById('currencyResultats').style.display = 'block';
+            } catch (error) {
+                afficherErreur('currencyMontantError', 'Erreur lors de la conversion');
+            }
+        }
+
+        // Gestionnaire de fuseaux horaires
+        function calculerFuseauxHoraires() {
+            const fuseauDe = document.getElementById('timezoneDe').value;
+            const heureLocale = document.getElementById('timezoneHeure').value;
+
+            effacerErreur('timezoneHeureError');
+            if (!heureLocale) return afficherErreur('timezoneHeureError', 'Veuillez entrer une heure valide');
+
+            const fuseaux = [
+                'Europe/Paris',
+                'America/New_York',
+                'America/Los_Angeles',
+                'Asia/Tokyo',
+                'Europe/London',
+                'Australia/Sydney',
+                'Asia/Shanghai'
+            ];
+
+            const options = { hour: '2-digit', minute: '2-digit', hour12: false };
+            const donneesDiv = document.getElementById('timezoneDonnees');
+            donneesDiv.innerHTML = '';
+
+            try {
+                const [heures, minutes] = heureLocale.split(':');
+                const dateBase = new Date();
+                dateBase.setHours(parseInt(heures), parseInt(minutes), 0, 0);
+
+                fuseaux.forEach(fuseau => {
+                    const formatter = new Intl.DateTimeFormat('fr-FR', {
+                        ...options,
+                        timeZone: fuseau
+                    });
+                    const heureDansFuseau = formatter.format(dateBase);
+                    const nomFuseau = fuseau.split('/').pop().replace('_', ' ');
+                    donneesDiv.appendChild(creerElementAvecTexte('p', `${nomFuseau} : ${heureDansFuseau}`));
+                });
+
+                document.getElementById('timezoneResultats').style.display = 'block';
+            } catch (e) {
+                afficherErreur('timezoneHeureError', 'Erreur lors du calcul des fuseaux horaires');
+            }
+        }
+
+        // Raccourcisseur d'URL
+        async function raccourcirURL() {
+            const url = document.getElementById('urlARaccourcir').value;
+            const alias = document.getElementById('urlAlias').value;
+            const expiration = document.getElementById('urlExpiration').value;
+
+            effacerErreur('urlARaccourcirError');
+            try {
+                new URL(url);
+            } catch {
+                return afficherErreur('urlARaccourcirError', 'Veuillez entrer une URL valide');
+            }
+
+            try {
+                // Simuler une requête API
+                await new Promise(resolve => setTimeout(resolve, 500));
+                const idAleatoire = Math.random().toString(36).substring(2, 8);
+                const urlRaccourcie = alias ? `https://pro.tools/${alias}` : `https://pro.tools/${idAleatoire}`;
+                const dateExpiration = expiration === 'never' ? 'Jamais' : new Date(Date.now() + parseInt(expiration) * 24 * 60 * 60 * 1000).toLocaleDateString('fr-FR');
+
+                const donneesDiv = document.getElementById('urlDonnees');
+                donneesDiv.innerHTML = '';
+                donneesDiv.appendChild(creerElementAvecTexte('p', `URL originale : ${url}`));
+                donneesDiv.appendChild(creerElementAvecTexte('p', `URL raccourcie : `));
+                const lien = document.createElement('a');
+                lien.href = url;
+                lien.textContent = urlRaccourcie;
+                lien.target = '_blank';
+                donneesDiv.appendChild(lien);
+                donneesDiv.appendChild(creerElementAvecTexte('p', `Expiration : ${dateExpiration}`));
+                donneesDiv.appendChild(creerElementAvecTexte('p', `Statistiques : 0 clics (suivi activé)`));
+                document.getElementById('urlResultats').style.display = 'block';
+            } catch (error) {
+                afficherErreur('urlARaccourcirError', 'Erreur lors du raccourcissement');
+            }
+        }
+
+        // Envoyer un message (section Contact)
+        function envoyerMessage() {
+            const modale = document.createElement('div');
+            modale.id = 'contactModal';
+            modale.className = 'modal';
+            modale.setAttribute('role', 'dialog');
+            modale.setAttribute('aria-labelledby', 'contactModalTitle');
+            modale.setAttribute('aria-modal', 'true');
+            modale.innerHTML = `
+                <div class="modal-content">
+                    <span class="close" onclick="fermerModale('contactModal')" role="button" aria-label="Fermer la modale Contact">×</span>
+                    <h2 id="contactModalTitle">📩 Envoyer un message</h2>
+                    <div class="tool-interface">
+                        <div class="input-group">
+                            <label for="contactNom">Nom :</label>
+                            <input type="text" id="contactNom" placeholder="Votre nom">
+                            <div id="contactNomError" class="error"></div>
+                    </div>
+                    <div class="input-group">
+                        <label for="contactEmail">E-mail :</label>
+                        <input type="email" id="contactEmail" placeholder="votre@email.com">
+                        <div id="contactEmailError" class="error"></div>
+                    </div>
+                    <div class="input-group">
+                    <label for="contactMessage">Message :</label>
+                    <textarea id="contactMessage" rows="4" placeholder="Votre message..."></textarea>
+                    <div id="contactMessageError" class="error"></div>
+                </div>
+                <div class="input-group">
+                    <label><input type="checkbox" id="contactConsent" required> J'accepte que mes données soient collectées pour traiter ma demande.</label>
+                    <div id="contactConsentError" class="error"></div>
+                </div>
+                <button class="service-button" onclick="soumettreMessage()">Envoyer</button>
+                <div id="contactResultats" class="results" style="display:none;">
+                    <h4>Confirmation :</h4>
+                    <div id="contactDonnees"></div>
+                </div>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modale);
+    ouvrirModale('contactModal');
+}
+
+        async function soumettreMessage() {
+            const nom = document.getElementById('contactNom').value;
+            const email = document.getElementById('contactEmail').value;
+            const message = document.getElementById('contactMessage').value;
+            const consent = document.getElementById('contactConsent').checked;
+
+                effacerErreur('contactNomError');
+                effacerErreur('contactEmailError');
+                effacerErreur('contactMessageError');
+                effacerErreur('contactConsentError');
+
+    if (!nom) return afficherErreur('contactNomError', 'Veuillez entrer votre nom');
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return afficherErreur('contactEmailError', 'Veuillez entrer un e-mail valide');
+    if (!message) return afficherErreur('contactMessageError', 'Veuillez entrer un message');
+    if (!consent) return afficherErreur('contactConsentError', 'Veuillez accepter la collecte des données');
+    if (!document.getElementById('contactConsent').checked) return afficherErreur('contactConsentError', 'Veuillez accepter la collecte des données');
+    try {
+        const response = await fetch('https://formspree.io/f/your_form_id', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ nom, email, message })
+        });
+
+        if (!response.ok) throw new Error('Erreur lors de l\'envoi');
+
+        const donneesDiv = document.getElementById('contactDonnees');
+        donneesDiv.innerHTML = '';
+        donneesDiv.appendChild(creerElementAvecTexte('p', `Merci, ${nom} !`));
+        donneesDiv.appendChild(creerElementAvecTexte('p', `Votre message a été envoyé. Nous vous répondrons à ${email} sous 24 heures.`));
+        document.getElementById('contactResultats').style.display = 'block';
+
+        document.getElementById('contactNom').value = '';
+        document.getElementById('contactEmail').value = '';
+        document.getElementById('contactMessage').value = '';
+        document.getElementById('contactConsent').checked = false;
+    } catch (error) {
+        afficherErreur('contactMessageError', 'Erreur lors de l\'envoi');
+    }
+}
+
+        // Sanitisation des entrées utilisateur
+        function sanitiserEntree(texte) {
+            const div = document.createElement('div');
+            div.textContent = texte;
+            return div.innerHTML;
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', () => {
+            // Sanitiser les entrées utilisateur
+            document.querySelectorAll('input[type="text"], input[type="url"], input[type="email"], textarea').forEach(input => {
+                input.addEventListener('input', () => {
+                    input.value = sanitiserEntree(input.value);
+                });
+            });
+
+            // Focus pour l'accessibilité
+            document.querySelectorAll('.service-button').forEach(button => {
+                button.addEventListener('click', () => {
+                    setTimeout(() => {
+                        const modale = document.querySelector('.modal[style*="block"] .modal-content');
+                        if (modale) modale.focus();
+                    }, 100);
+                });
+            });
+
+            // Mettre à jour la valeur initiale du slider de mot de passe
+            mettreAJourLongueurMotDePasse();
+        });
+
+    </script>
+</body>
+</html>
