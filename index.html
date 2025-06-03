@@ -1835,7 +1835,12 @@
             // Mettre à jour la valeur initiale du slider de mot de passe
             mettreAJourLongueurMotDePasse();
         });
-
+        // Ajouter sw
+        if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js')
+        .then(() => console.log('Service Worker enregistré avec succès !'))
+        .catch(error => console.error('Erreur d’enregistrement du Service Worker:', error));
+        }
     </script>
 </body>
 </html>

@@ -4,9 +4,9 @@ const urlsToCache = [
     '/index.html',
     '/styles.css',
     '/script.js',
-    '/images/icon-192.png',
-    '/images/icon-512.png',
-    '/images/logo.png'
+    '/assets/icon-192.png',
+    '/assets/icon-512.png',
+    '/assets/logo.png'
 ];
 
 self.addEventListener('install', event => {
@@ -27,6 +27,6 @@ self.addEventListener('push', event => {
     const data = event.data.json();
     self.registration.showNotification(data.title, {
         body: data.body,
-        icon: '/images/icon-192.png'
+        icon: '/assets/icon-192.png'
     });
 });
