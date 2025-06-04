@@ -1,8 +1,10 @@
 {
   "version": 2,
   "routes": [
-    { "src": "/ads.txt", "dest": "/ads.txt" },
+    { "src": "/ads.txt", "headers": { "Cache-Control": "public,max-age=3600" }, "dest": "/ads.txt" },
+
     { "src": "/api/(.*)", "dest": "/api/$1.js" },
+
     { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
